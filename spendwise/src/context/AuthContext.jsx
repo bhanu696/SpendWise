@@ -3,8 +3,6 @@ import { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext(null);
 
-const API_URL = "http://localhost:5000/api/auth";
-
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -22,13 +20,16 @@ export function AuthProvider({ children }) {
   });
 
   async function authenticate(endpoint, credentials) {
-    const response = await fetch(`${API_URL}/${endpoint}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(credentials),
-    });
+    const response = await fetch(
+      `${API_BASE_URL}/api/auth/${endpoint}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      }
+    );
 
     const data = await response.json();
 
